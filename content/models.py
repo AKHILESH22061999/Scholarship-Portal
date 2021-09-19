@@ -27,7 +27,7 @@ class Scholarship(models.Model):
     program = models.CharField(max_length=255, default='NA')
     specialization = models.CharField(max_length=255, default='NA')
     gender = models.CharField(max_length=255, default='NA')
-    minimum_cgpa = models.IntegerField(max_length=255, default='NA')
+    minimum_cgpa = models.IntegerField(max_length=255, default='0')
 
     external_link = models.CharField(max_length=1000, default='NA')
 

@@ -23,7 +23,7 @@
         {% endfor %}
         <div class="row" style="margin-top: 2%;">
             <div class="col-sm-6 col-sm-offset-3">
-                <div id="uploadForm" class="well well-lg">
+                <div class="well well-lg">
                     <formset>
                         {% if user.is_authenticated %}
                             <legend>Update Student Profile</legend>
@@ -42,11 +42,11 @@
                             </div>
                             {% if user.is_authenticated %}
                                 <div class="form-group">
-                                    <button class="formButton" type="submit">Update</button>
+                                    <button class="myButton" type="submit">Update</button>
                                 </div>
                             {% else %}
                                 <div class="form-group">
-                                    <button class="formButton" type="submit">Sign Up</button>
+                                    <button class="myButton" type="submit">Sign Up</button>
                                 </div>
                                 </form>
                                 <div class="border-top pt-3">

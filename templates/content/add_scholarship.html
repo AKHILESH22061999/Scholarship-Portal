@@ -17,8 +17,8 @@
 
             <div class=" sm-3 ">
                 <h3 style="text-align:center">Add New Scholarship</h3>
-                    <div id="uploadForm" class="well well-lg">
-                    <form method="POST" action="/content/add_subject" enctype="multipart/form-data"
+                    <div id="" class="well well-lg">
+                    <form method="POST" action="/content/add_scholarship" enctype="multipart/form-data"
                           onsubmit="return validateForm();">
                         {% csrf_token %}
                         <div class="form-group">
@@ -38,15 +38,31 @@
                             <input class="form-control" name="specialization" id="specialization" >
                         </div>
                         <div class="form-group">
+                            <label class="formText">Department </label>
+                            <input class="form-control" name="department" id="department" >
+                        </div>
+                        <div class="form-group">
+                            <label class="formText">Caste</label>
+                            <input class="form-control" name="caste" id="caste" >
+                        </div>
+                        <div class="form-group">
+                            <label class="formText">Requirements Info </label>
+                            <input class="form-control" name="requirements_info" id="requirements_info" >
+                        </div>
+                        <div class="form-group">
                             <label class="formText">Gender</label>
                             <input class="form-control" name="gender" id="gender" >
                         </div>
                         <div class="form-group">
                             <label class="formText">Minimum CGPA</label>
-                            <input class="form-control" name="cgpa" id="cgpa" >
+                            <input class="form-control" name="minimum_cgpa" id="minimum_cgpa" >
+                        </div>
+                        <div class="form-group">
+                            <label class="formText">External Link</label>
+                            <input class="form-control" name="external_link" id="external_link" >
                         </div>
                         <center>
-                            <button type="submit" id="btn"  class="formButton">Add</button>
+                            <button type="submit" id="btn"  class="myButton">Add</button>
                         </center>
                     </form>
                     <br>

@@ -125,8 +125,6 @@ def Show_Pending_Approvals(request):
     response = {}
     response['applications'] = applications
     response['departments'] = departments
-    designations = {'Teacher', 'Faculty Advisor', 'Dean', 'Head of Department', 'Director'}
-    response['designations'] = designations
     return render(request, 'content/show_pending_approvals.html', response)
 
 
@@ -143,11 +141,18 @@ def Show_Pending_Approvals(request):
 @csrf_exempt
 @login_required_message(message="You should be logged in, in order to perform this")
 @login_required(login_url="/login/")
-def Approve(request):
-    app_id = request.POST.get('id_checker')
+def Approve(request, app_id):
+    print(app_id)
     app = Application.objects.filter(app_id=app_id)
-    app = app[0]
-   
+    if app[0]:
+        app = app[0]
+    else:
+        app = Node
+        response = {}
+        response['applications'] = applications
+        response['departments'] = departments
+        return render(request, 'content/show_pending_approvals.html', response)
+
     app.is_approved = True
     app.is_rejected = False
     app.save()
@@ -239,13 +244,39 @@ def Track_Student_Applications(request):
 @login_required_message(message="You should be logged in, in order to perform this")
 @login_required(login_url="/login/")
 def Add_Scholarship(request):
-    user = CustomUser.objects.get(pk=request.user.id)
-    response = {}
-    if user.is_admin:
-        return render(request, 'content/add_scholarship.html', response)
-    else:
-        if user.is_student:
-            return render(request, 'student_home.html', response)
+    if request.method == "POST":
+        user = CustomUser.objects.get(pk=request.user.id)
+        response = {}
+        sch = Scholarship.objects.create(name = request.POST['title'], abbreviation= request.POST['abbreviation'])
+        try:
+            dept = Department.objects.get(name=request.POST['department'])
+            sch.department = dept[0]
+        except Exception as e:
+            sch.department = None
+        sch.requirements_info = request.POST['requirements_info']
+        sch.caste = request.POST['caste']
+        sch.program = request.POST['program']
+        sch.specialization = request.POST['specialization']
+        sch.gender = request.POST['gender']
+        if request.POST['minimum_cgpa'] == 'NA':
+            sch.minimum_cgpa = 0
         else:
-            return render(request, 'staff_home.html', response)
+            sch.minimum_cgpa = int(request.POST['minimum_cgpa'])
+        sch.external_link = request.POST['external_link']
+        sch.save()
+        messages.success(request, "Scholarship has been added successfully.")
+    if request.user.is_admin:
+        return render(request, 'content/add_scholarship.html')
+    else:
+        return render(request, 'student_home.html')
 
+@csrf_exempt
+@login_required_message(message="You should be logged in, in order to perform this")
+@login_required(login_url="/login/")
+def applied_scholarships(request):
+    response = {}
+    user = CustomUser.objects.get(pk = request.user.id)
+    user_applications = Application.objects.filter(applicant=user)
+    
+    response['user_applications'] = user_applications
+    return render(request, 'content/all_applied_scholarships.html', response)

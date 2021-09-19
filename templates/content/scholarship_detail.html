@@ -23,6 +23,10 @@
                         <div style="color:red">Your Application ID  is : <b>{{ app_id }}</b></div>
                     </div>
                 {% else %}
+                <h3>Instructions/Requirements</h3>
+                <div>
+                    {{scholarship.requirements_info}}
+                </div>
                 <div id="uploadForm" class="well well-lg">
                     <legend>Application for {{ scholarship.name }}</legend>
                     <form method="POST" action="/content/apply/">

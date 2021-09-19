@@ -1,5 +1,5 @@
 {% extends 'base.html' %}
-{% block title %}Home NIT ADDA{% endblock title %}
+{% block title %}NITW SP{% endblock title %}
 {% load static %}
 {% block content3 %}"../media/{{ user.image }}"{% endblock content3 %}
 {% block content4 %}"../media/{{ user.image }}"{% endblock content4 %}
@@ -29,7 +29,11 @@
                             <tr>
                                 <td style="vertical-align:middle">{{ forloop.counter }}</td>
                                 <td style="vertical-align:middle">{{ i.name }}</td>
-                                <td style="vertical-align:middle">{{ eligible}}</td>
+                                {% if  eligible %}
+                                <td style="vertical-align:middle">Yes</td>
+                                {% else %}
+                                <td style="vertical-align:middle">No</td>
+                                {% endif %}
                                 {% if user.is_authenticated and user.is_superuser %}
                                     <td scope="col">
                                         {% if  i.is_approved %}
@@ -48,9 +52,15 @@
                                             <a style="font-weight: bold"
                                                href="/content/scholarships/{{ i.id }}"
                                                class="btn btn-info">
-                                                Apply</a>
+                                                Apply
+                                            </a>
                                             {% else %}
-                                            N/A
+                                            
+                                            <a style="font-weight: bold"
+                                               href="/content/scholarships/{{ i.id }}"
+                                               class="btn btn-info">
+                                                Apply
+                                            </a>
                                             {% endif %}
                                         </td>
                                 {% endif %}
